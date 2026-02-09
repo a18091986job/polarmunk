@@ -1,6 +1,8 @@
 import logging
-
-from aiogram import Bot, Dispatcher, executor, types
+import asyncio
+from aiogram import Bot, Dispatcher, types
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
 from config import get_config
 
 
@@ -8,20 +10,24 @@ cfg = get_config()
 logging.basicConfig(level=getattr(logging, cfg.LOG_LEVEL.upper(), logging.INFO))
 
 
-def main():
-	bot = Bot(token=cfg.BOT_TOKEN)
-	dp = Dispatcher(bot)
+async def main():
+    # Создаем бота с новым API aiogram 3.7.0+
+    bot = Bot(
+        token=cfg.BOT_TOKEN,
+        default=DefaultBotProperties(parse_mode=ParseMode.HTML)
+    )
+    dp = Dispatcher()
 
-	@dp.message_handler()
-	async def echo(message: types.Message):
-		await message.answer(message.text)
+    @dp.message()
+    async def echo(message: types.Message):
+        await message.answer(message.text)
 
-
-	executor.start_polling(dp, skip_updates=True)
+    # Запускаем бота
+    await dp.start_polling(bot)
 
 
 if __name__ == '__main__':
-	main()
+    asyncio.run(main())
 
 
 # import logging
