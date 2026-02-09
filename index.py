@@ -1,33 +1,41 @@
-import logging
-import asyncio
-from aiogram import Bot, Dispatcher, types
-from aiogram.client.default import DefaultBotProperties
-from aiogram.enums import ParseMode
-from config import get_config
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def index():
+    return {"message": "Hello World"}
+
+# import logging
+# import asyncio
+# from aiogram import Bot, Dispatcher, types
+# from aiogram.client.default import DefaultBotProperties
+# from aiogram.enums import ParseMode
+# from config import get_config
 
 
-cfg = get_config()
-logging.basicConfig(level=getattr(logging, cfg.LOG_LEVEL.upper(), logging.INFO))
+# cfg = get_config()
+# logging.basicConfig(level=getattr(logging, cfg.LOG_LEVEL.upper(), logging.INFO))
 
 
-async def main():
-    # Создаем бота с новым API aiogram 3.7.0+
-    bot = Bot(
-        token=cfg.BOT_TOKEN,
-        default=DefaultBotProperties(parse_mode=ParseMode.HTML)
-    )
-    dp = Dispatcher()
+# async def main():
+#     # Создаем бота с новым API aiogram 3.7.0+
+#     bot = Bot(
+#         token=cfg.BOT_TOKEN,
+#         default=DefaultBotProperties(parse_mode=ParseMode.HTML)
+#     )
+#     dp = Dispatcher()
 
-    @dp.message()
-    async def echo(message: types.Message):
-        await message.answer(message.text)
+#     @dp.message()
+#     async def echo(message: types.Message):
+#         await message.answer(message.text)
 
-    # Запускаем бота
-    await dp.start_polling(bot)
+#     # Запускаем бота
+#     await dp.start_polling(bot)
 
 
-if __name__ == '__main__':
-    asyncio.run(main())
+# if __name__ == '__main__':
+#     asyncio.run(main())
 
 
 # import logging
