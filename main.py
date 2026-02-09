@@ -2,13 +2,17 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"message": "Hello World from FastAPI on Vercel!"}
+# @app.get("/")
+# def read_root():
+#     return {"message": "Hello World from FastAPI on Vercel!"}
 
-@app.get("/api/health")
-def health_check():
-    return {"status": "healthy"}
+# @app.get("/api/health")
+# def health_check():
+#     return {"status": "healthy"}
+
+@app.get("/")
+def index():
+    return {"message": "Hello World"}
 
 # This is important for Vercel
 if __name__ == "__main__":
